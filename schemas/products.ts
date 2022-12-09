@@ -47,8 +47,16 @@ export default defineType({
     defineField({
       name: 'categories',
       title: 'Categorias',
-      type: 'reference',
-      to: [{ type: 'categories' }],
+      type: 'array',
+      // of: [{ type: 'categories' }],
+      of: [
+        {
+          type: 'reference',
+          to: [
+            {type: 'categories'},
+          ]
+        }
+      ]
     }),
     // defineField({
     //   name: 'crewMembers',
