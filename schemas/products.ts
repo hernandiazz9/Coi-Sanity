@@ -1,15 +1,15 @@
-import {defineField, defineType} from 'sanity'
-import {MdLocalMovies as icon} from 'react-icons/md'
+import { defineField, defineType } from 'sanity';
+import { MdLocalMovies as icon } from 'react-icons/md';
 
 export default defineType({
-  name: 'movie',
-  title: 'Movie',
+  name: 'products',
+  title: 'Productos',
   type: 'document',
   icon,
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Titulo',
       type: 'string',
     }),
     defineField({
@@ -22,15 +22,15 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'overview',
-      title: 'Overview',
+      name: 'description',
+      title: 'Descripción',
       type: 'blockContent',
     }),
-    defineField({
-      name: 'releaseDate',
-      title: 'Release date',
-      type: 'datetime',
-    }),
+    // defineField({
+    //   name: 'releaseDate',
+    //   title: 'Release date',
+    //   type: 'datetime',
+    // }),
     defineField({
       name: 'poster',
       title: 'Poster Image',
@@ -45,22 +45,17 @@ export default defineType({
       type: 'number',
     }),
     defineField({
-      name: 'popularity',
-      title: 'Popularity',
-      type: 'number',
+      name: 'categories',
+      title: 'Categorias',
+      type: 'reference',
+      to: [{ type: 'categories' }],
     }),
-    defineField({
-      name: 'castMembers',
-      title: 'Cast Members',
-      type: 'array',
-      of: [{type: 'castMember'}],
-    }),
-    defineField({
-      name: 'crewMembers',
-      title: 'Crew Members',
-      type: 'array',
-      of: [{type: 'crewMember'}],
-    }),
+    // defineField({
+    //   name: 'crewMembers',
+    //   title: 'Crew Members',
+    //   type: 'array',
+    //   of: [{type: 'crewMember'}],
+    // }),
   ],
   preview: {
     select: {
@@ -71,15 +66,17 @@ export default defineType({
       castName1: 'castMembers.1.person.name',
     },
     prepare(selection) {
-      const year = selection.date && selection.date.split('-')[0]
-      const cast = [selection.castName0, selection.castName1].filter(Boolean).join(', ')
+      const year = selection.date && selection.date.split('-')[0];
+      const cast = [selection.castName0, selection.castName1]
+        .filter(Boolean)
+        .join(', ');
 
       return {
         title: `${selection.title} ${year ? `(${year})` : ''}`,
         date: selection.date,
         subtitle: cast,
         media: selection.media,
-      }
+      };
     },
   },
-})
+});

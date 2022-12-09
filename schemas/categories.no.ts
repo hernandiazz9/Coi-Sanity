@@ -1,8 +1,8 @@
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'castMember',
-  title: 'Cast Member',
+  name: 'categories',
+  title: 'Categorias',
   type: 'object',
   fields: [
     defineField({
