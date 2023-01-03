@@ -1,5 +1,5 @@
-import { defineField, defineType } from 'sanity';
-import { MdLocalMovies as icon } from 'react-icons/md';
+import {defineField, defineType} from 'sanity'
+import {MdLocalMovies as icon} from 'react-icons/md'
 
 export default defineType({
   name: 'products',
@@ -34,10 +34,15 @@ export default defineType({
     defineField({
       name: 'poster',
       title: 'Poster Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+        },
+      ],
     }),
     defineField({
       name: 'externalId',
@@ -52,11 +57,9 @@ export default defineType({
       of: [
         {
           type: 'reference',
-          to: [
-            {type: 'categories'},
-          ]
-        }
-      ]
+          to: [{type: 'categories'}],
+        },
+      ],
     }),
     // defineField({
     //   name: 'crewMembers',
@@ -74,17 +77,15 @@ export default defineType({
       castName1: 'castMembers.1.person.name',
     },
     prepare(selection) {
-      const year = selection.date && selection.date.split('-')[0];
-      const cast = [selection.castName0, selection.castName1]
-        .filter(Boolean)
-        .join(', ');
+      const year = selection.date && selection.date.split('-')[0]
+      const cast = [selection.castName0, selection.castName1].filter(Boolean).join(', ')
 
       return {
         title: `${selection.title} ${year ? `(${year})` : ''}`,
         date: selection.date,
         subtitle: cast,
         media: selection.media,
-      };
+      }
     },
   },
-});
+})
